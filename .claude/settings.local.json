@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mvn spring-boot:run)",
+      "Bash(mvn clean:*)",
+      "Bash(taskkill /IM java.exe /F)",
+      "Bash(mvn compile:*)",
+      "Bash(mvn spring-boot:run -f \"C:/Users/manue/OneDrive/Documents/Moviles/Proyecto Reservas/SpringBootBack/api/pom.xml\")"
+    ]
+  }
+}
