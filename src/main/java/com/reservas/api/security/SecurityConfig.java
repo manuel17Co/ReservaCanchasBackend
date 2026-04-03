@@ -40,6 +40,11 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/sedes/**").permitAll()
+                .requestMatchers("/api/tipos-cancha/**").permitAll()
+                .requestMatchers("/api/canchas/**").permitAll()
+                .requestMatchers("/api/horarios/**").permitAll()
+                .requestMatchers("/api/reservas/**").authenticated()
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session
