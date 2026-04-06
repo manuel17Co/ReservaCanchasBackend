@@ -26,7 +26,7 @@ public interface CanchaRepository extends JpaRepository<Cancha, Long> {
                                          @Param("tipoCanchaId") Long tipoCanchaId);
 
     @Query("SELECT c FROM Cancha c JOIN FETCH c.sede JOIN FETCH c.tipoCancha " +
-           "WHERE c.id = :id AND c.activa = true")
+           "WHERE c.id = :id")
     Cancha findByIdWithDetails(@Param("id") Long id);
 
     @Query("SELECT c FROM Cancha c JOIN FETCH c.sede JOIN FETCH c.tipoCancha " +

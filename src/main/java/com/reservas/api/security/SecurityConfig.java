@@ -45,7 +45,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/canchas/**").permitAll()
                 .requestMatchers("/api/horarios/**").permitAll()
                 .requestMatchers("/api/reservas/**").authenticated()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
             )
             .sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
