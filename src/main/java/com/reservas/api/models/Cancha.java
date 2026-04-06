@@ -18,6 +18,12 @@ public class Cancha {
     @Column(name = "descripcion", length = 500)
     private String descripcion;
 
+    @Column(name = "capacidad")
+    private Integer capacidad;
+
+    @Column(name = "imagen", length = 500)
+    private String imagen;
+
     @Column(name = "precio_hora", nullable = false)
     private Double precioHora;
 
@@ -83,6 +89,22 @@ public class Cancha {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Integer getCapacidad() {
+        return capacidad;
+    }
+
+    public void setCapacidad(Integer capacidad) {
+        this.capacidad = capacidad;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
     public Double getPrecioHora() {

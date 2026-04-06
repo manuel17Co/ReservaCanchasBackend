@@ -37,8 +37,7 @@ public class TipoCanchaService {
     private TipoCanchaDTO convertirADTO(TipoCancha tipo) {
         return new TipoCanchaDTO(
                 tipo.getId(),
-                tipo.getNombre(),
-                tipo.getDescripcion()
+                tipo.getNombre()
         );
     }
 }

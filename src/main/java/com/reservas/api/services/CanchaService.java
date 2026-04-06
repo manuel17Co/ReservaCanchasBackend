@@ -76,6 +76,8 @@ public class CanchaService {
 
         cancha.setNombre(canchaActualizada.getNombre());
         cancha.setDescripcion(canchaActualizada.getDescripcion());
+        cancha.setCapacidad(canchaActualizada.getCapacidad());
+        cancha.setImagen(canchaActualizada.getImagen());
         cancha.setPrecioHora(canchaActualizada.getPrecioHora());
         cancha.setActiva(canchaActualizada.getActiva());
         cancha.setSede(canchaActualizada.getSede());
@@ -90,6 +92,8 @@ public class CanchaService {
                 cancha.getId(),
                 cancha.getNombre(),
                 cancha.getDescripcion(),
+                cancha.getCapacidad(),
+                cancha.getImagen(),
                 cancha.getPrecioHora(),
                 cancha.getActiva(),
                 cancha.getSede().getId(),

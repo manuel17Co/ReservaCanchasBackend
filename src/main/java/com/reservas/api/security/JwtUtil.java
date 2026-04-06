@@ -19,8 +19,11 @@ public class JwtUtil {
     @Value("${jwt.secret:miClaveSecretaParaGenerarTokensJWTQueDebeSerSuficientementeLarga}")
     private String secretKey;
 
-    @Value("${jwt.expiration:86400000}")
+    @Value("${jwt.expiration:3600000}")
     private long expiration;
+
+    @Value("${jwt.inactivity-timeout:1800000}")
+    private long inactivityTimeout;
 
     private SecretKey getSigningKey() {
         byte[] keyBytes = secretKey.getBytes(StandardCharsets.UTF_8);
@@ -33,6 +36,10 @@ public class JwtUtil {
 
     public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
+    }
+
+    public Date extractIssuedAt(String token) {
+        return extractClaim(token, Claims::getIssuedAt);
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
@@ -70,6 +77,10 @@ public class JwtUtil {
                 .compact();
     }
 
+
+    public long getInactivityTimeout() {
+        return inactivityTimeout;
+    }
     public Boolean validateToken(String token, String username) {
         final String extractedUsername = extractUsername(token);
         return (extractedUsername.equals(username) && !isTokenExpired(token));

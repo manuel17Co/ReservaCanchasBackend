@@ -3,14 +3,12 @@ package com.reservas.api.dto;
 public class TipoCanchaDTO {
     private Long id;
     private String nombre;
-    private String descripcion;
 
     public TipoCanchaDTO() {}
 
-    public TipoCanchaDTO(Long id, String nombre, String descripcion) {
+    public TipoCanchaDTO(Long id, String nombre) {
         this.id = id;
         this.nombre = nombre;
-        this.descripcion = descripcion;
     }
 
     public Long getId() {
@@ -27,13 +25,5 @@ public class TipoCanchaDTO {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
     }
 }

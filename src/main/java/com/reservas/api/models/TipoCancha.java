@@ -15,9 +15,6 @@ public class TipoCancha {
     @Column(nullable = false, unique = true)
     private String nombre;
 
-    @Column(name = "descripcion", length = 500)
-    private String descripcion;
-
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
@@ -40,9 +37,8 @@ public class TipoCancha {
 
     public TipoCancha() {}
 
-    public TipoCancha(String nombre, String descripcion) {
+    public TipoCancha(String nombre) {
         this.nombre = nombre;
-        this.descripcion = descripcion;
     }
 
     public Long getId() {
@@ -59,14 +55,6 @@ public class TipoCancha {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
     }
 
     public LocalDateTime getCreatedAt() {

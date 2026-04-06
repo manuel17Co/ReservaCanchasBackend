@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Date;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -23,6 +24,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
     private UsuarioDetailsService userDetailsService;
+
+    @Autowired
+    private TokenBlacklistService tokenBlacklistService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -38,12 +42,30 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         jwt = authHeader.substring(7);
+
+        // Verificar si el token está en la blacklist (logout)
+        if (tokenBlacklistService.isTokenBlacklisted(jwt)) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token revocado. Por favor, inicie sesión nuevamente.");
+            return;
+        }
+
         username = jwtUtil.extractUsername(jwt);
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
 
             if (jwtUtil.validateToken(jwt, username)) {
+                // Verificar inactividad
+                Date tokenIssued = jwtUtil.extractIssuedAt(jwt);
+                long inactivityTimeout = jwtUtil.getInactivityTimeout();
+                long timeSinceIssue = System.currentTimeMillis() - tokenIssued.getTime();
+
+                if (timeSinceIssue > inactivityTimeout) {
+                    tokenBlacklistService.addToBlacklist(jwt);
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Sesión expirada por inactividad. Por favor, inicie sesión nuevamente.");
+                    return;
+                }
+
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,

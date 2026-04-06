@@ -4,6 +4,8 @@ public class CanchaDTO {
     private Long id;
     private String nombre;
     private String descripcion;
+    private Integer capacidad;
+    private String imagen;
     private Double precioHora;
     private Boolean activa;
     private Long sedeId;
@@ -13,11 +15,13 @@ public class CanchaDTO {
 
     public CanchaDTO() {}
 
-    public CanchaDTO(Long id, String nombre, String descripcion, Double precioHora, Boolean activa,
+    public CanchaDTO(Long id, String nombre, String descripcion, Integer capacidad, String imagen, Double precioHora, Boolean activa,
                      Long sedeId, String sedeNombre, Long tipoCanchaId, String tipoCanchaNombre) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.capacidad = capacidad;
+        this.imagen = imagen;
         this.precioHora = precioHora;
         this.activa = activa;
         this.sedeId = sedeId;
@@ -48,6 +52,22 @@ public class CanchaDTO {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Integer getCapacidad() {
+        return capacidad;
+    }
+
+    public void setCapacidad(Integer capacidad) {
+        this.capacidad = capacidad;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
     public Double getPrecioHora() {

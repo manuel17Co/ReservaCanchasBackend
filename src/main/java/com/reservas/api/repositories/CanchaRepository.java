@@ -30,8 +30,7 @@ public interface CanchaRepository extends JpaRepository<Cancha, Long> {
     Cancha findByIdWithDetails(@Param("id") Long id);
 
     @Query("SELECT c FROM Cancha c JOIN FETCH c.sede JOIN FETCH c.tipoCancha " +
-           "WHERE c.activa = true " +
-           "AND (:sedeId IS NULL OR c.sede.id = :sedeId) " +
+           "WHERE (:sedeId IS NULL OR c.sede.id = :sedeId) " +
            "AND (:tipoCanchaId IS NULL OR c.tipoCancha.id = :tipoCanchaId)")
     List<Cancha> findAllWithDetails(@Param("sedeId") Long sedeId,
                                     @Param("tipoCanchaId") Long tipoCanchaId);
