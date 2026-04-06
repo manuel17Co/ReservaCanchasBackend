@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mysql -u root -padmin -e \"USE reservas_db; SHOW TABLES;\")"
+    ]
+  }
+}

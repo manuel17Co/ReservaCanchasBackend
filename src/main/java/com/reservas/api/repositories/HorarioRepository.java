@@ -21,13 +21,15 @@ public interface HorarioRepository extends JpaRepository<Horario, Long> {
 
     @Query("SELECT h FROM Horario h " +
            "WHERE h.cancha.id = :canchaId " +
-           "AND NOT EXISTS (SELECT r FROM Reserva r WHERE r.horario.id = h.id AND r.fecha = :fecha)")
+           "AND h.disponible = true " +
+           "AND NOT EXISTS (SELECT r FROM Reserva r WHERE r.horario.id = h.id AND r.fecha = :fecha AND r.estado != 'CANCELADA')")
     List<Horario> findHorariosDisponibles(@Param("canchaId") Long canchaId,
                                            @Param("fecha") LocalDate fecha);
 
     @Query("SELECT h FROM Horario h JOIN h.cancha c " +
            "WHERE h.cancha.id = :canchaId " +
-           "AND NOT EXISTS (SELECT r FROM Reserva r WHERE r.horario.id = h.id AND r.fecha = :fecha) " +
+           "AND h.disponible = true " +
+           "AND NOT EXISTS (SELECT r FROM Reserva r WHERE r.horario.id = h.id AND r.fecha = :fecha AND r.estado != 'CANCELADA') " +
            "ORDER BY h.horaInicio ASC")
     List<Horario> findHorariosDisponiblesWithDetails(@Param("canchaId") Long canchaId,
                                                       @Param("fecha") LocalDate fecha);

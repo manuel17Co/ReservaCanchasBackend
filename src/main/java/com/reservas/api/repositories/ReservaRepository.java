@@ -23,5 +23,6 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
     List<Reserva> findByCanchaIdAndFecha(@Param("canchaId") Long canchaId,
                                           @Param("fecha") LocalDate fecha);
 
+    @Query("SELECT COUNT(r) > 0 FROM Reserva r WHERE r.horario.id = :horarioId AND r.fecha = :fecha AND r.estado != 'CANCELADA'")
     boolean existsByHorarioIdAndFecha(@Param("horarioId") Long horarioId, @Param("fecha") LocalDate fecha);
 }
