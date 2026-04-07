@@ -50,7 +50,9 @@ public class AuthService {
 
         String token = jwtUtil.generateToken(usuario.getCorreo());
         tokenBlacklistService.registerUserSession(usuario.getCorreo());
-        return new AuthResponse(token, "Usuario registrado exitosamente");
+        
+        // ACTUALIZADO: Pasamos token, mensaje, nombre y correo
+        return new AuthResponse(token, "Usuario registrado exitosamente", usuario.getNombre(), usuario.getCorreo());
     }
 
     public AuthResponse login(LoginRequest request) {
@@ -58,11 +60,16 @@ public class AuthService {
                 new UsernamePasswordAuthenticationToken(request.getCorreo(), request.getContrasena())
         );
 
-        UserDetails userDetails = userDetailsService.loadUserByUsername(request.getCorreo());
-        String token = jwtUtil.generateToken(userDetails.getUsername());
-        tokenBlacklistService.registerUserSession(userDetails.getUsername());
+        // 1. Buscamos al usuario completo en la DB para obtener su nombre y correo
+        Usuario usuario = usuarioRepository.findByCorreo(request.getCorreo())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        return new AuthResponse(token, "Inicio de sesión exitoso");
+        // 2. Generamos el token usando el correo
+        String token = jwtUtil.generateToken(usuario.getCorreo());
+        tokenBlacklistService.registerUserSession(usuario.getCorreo());
+
+        // ACTUALIZADO: Retornamos el objeto con los 4 campos necesarios
+        return new AuthResponse(token, "Inicio de sesión exitoso", usuario.getNombre(), usuario.getCorreo());
     }
 
     public LogoutResponse logout(String token) {
